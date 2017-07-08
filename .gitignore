@@ -5,3 +5,6 @@ gen
 
 # Raw art files
 *.afdesign
+
+# Confidential
+background/
