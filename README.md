@@ -24,7 +24,7 @@ Submitted to reviewer in "Notes to Reviewer"
 
 # Known issues
 ## Not built
-At time of writing, I'm still in planning stages, so none of the following files exist, hence it probably won't work.
+At time of writing, I'm still in planning stages, hence it probably won't work.
 
 # Files
 
