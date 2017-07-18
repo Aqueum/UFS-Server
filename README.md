@@ -177,3 +177,99 @@ output:
 - Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot)
 - Click Create snapshot
 - Named `UFS-system-1500382621552`
+
+## Update Item Catalogue
+- Following implementation of review suggestions
+- `cd UFS-ItemCatalogue`
+- `git pull origin master`
+
+## Install Flask with virtualenv
+([Armin Ronacher](http://flask.pocoo.org/docs/0.12/installation/))
+- `cd UFS-ItemCatalogue` (if  not already there)
+- `virtualenv venv` & `Y` to set up virtual environment'
+- last step also installs setuptools, pkg_resources, pip & wheel
+- `. venv/bin/activate` to activate vitual environment
+- check (venv) prepending prompt to see its OK
+- `pip install Flask`
+
+## Install SQLAlchemy
+([SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html))
+- Inside virtual environment:
+- `pip install SQLAlchemy`
+
+## Install oauth2client
+([readthedocs](https://oauth2client.readthedocs.io/en/latest/))
+- Inside virtual environment:
+- `pip install --upgrade oauth2client`
+
+## Install Requests
+([Kenneth Reitz](http://docs.python-requests.org/en/master/user/install/))
+- Inside virtual environment:
+- `pip install requests'
+
+## Add client_secrets.json
+- `cd UFS-ItemCatalogue/catalogue/`
+- `nano client_secrets.json`
+- paste in [Google OAuth2 Credentials](https://github.com/Aqueum/UFS-ItemCatalogue/blob/master/README.md)
+
+## Test to see if everything installed
+- Inside virtual environment:
+- `cd UFS-ItemCatalogue/` if not already there
+- `python catalogue/application.py`
+- control-c to quit if it's working
+
+## Snapshot
+- Because application.py now runs without errors
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot)
+- Click Create snapshot
+- Named `UFS-system-1500388154142`
+
+## Branch UFS-ItemCatalogue
+([Kunena](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches))
+- `git checkout -b server` to create and switch to new branch
+- `git push origin server` to push branch to GitHub
+- enter GitHub username & password
+
+### Push changes
+- `git push --set-upstream origin server`
+- enter GitHub username & password
+
+## Deploy UFS-ItemCatalogue with Gunicorn & systemd
+([Ionut](https://www.vioan.eu/blog/2016/10/10/deploy-your-flask-python-app-on-ubuntu-with-apache-gunicorn-and-systemd/))
+- `cd UFS-ItemCatalogue` (if  not already there)
+- `. venv/bin/activate` to activate vitual environment
+- `sudo a2enmod` to enable apache proxy modules
+- give list of modules: `proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html`
+- make backup of 000-default.conf: `sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.backup`
+- `sudo nano /etc/apache2/sites-available/000-default.conf`
+- add the following before `</VirtualHost>`:
+`    <Proxy *>
+         Order deny,allow
+         Allow from all
+     </Proxy>
+     ProxyPreserveHost On
+     <Location "/IC">
+           ProxyPass "http://0.0.0.0:8000/"
+           ProxyPassReverse "http://0.0.0.0:8000/"
+     </Location>
+`
+- `service apache2 restart`
+- select 2. grader & enter password
+- check `Service unavailable` at `http://35.176.170.23/IC`
+- `pip install flask gunicorn`
+- `python catalogue/application.py`
+
+### Snapshot
+- Because application.py is being served with dead links & I want to go off piste to fix it 
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot)
+- Click Create snapshot
+- Named `UFS-system-1500417929080`
+
+### Run app at root
+- ctrl-C
+- `sudo nano /etc/apache2/sites-available/000-default.conf`
+- change `<Location "/IC">` to `<Location "/">
+- `service apache2 restart`
+- `python catalogue/application.py`
+
+### Configure Gunicorn
