@@ -382,6 +382,30 @@ See [tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-
 ## Change grader key
 Changed key, after uploading password protected key to github (without password) after realising it was the key content that was requested rather than the password in the grader notes.
 
+## Automatic Security Updates
+See [brian-digital-traffic](https://help.ubuntu.com/community/AutomaticSecurityUpdates)'s tutorial
+- `sudo dpkg-reconfigure --priority=low unattended-upgrades`
+
+## Ban IP addresses showing suspicious behaviour
+[fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page)'s wiki was useless for me, but [linode](https://www.linode.com/docs/security/using-fail2ban-for-security) covered it
+- `sudo apt-get update && apt-get upgrade -y` to ensure system up to date
+- `sudo apt-get install fail2ban`
+- I decided against installing sendmail (`apt-get install sendmail`)
+- I also didn't touch the ssh (`ufw allow ssh`, `ufw enable`) as all ports I'm allowed to open to meet the rubric are already open)
+
+# Monitor with Munin
+See [Till Brehm](https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/)'s tutorial
+- `sudo apt-get -y install apache2 libcgi-fast-perl libapache2-mod-fcgid`
+- `sudo apt-get -y install munin munin-node munin-plugins-extra`
+- `sudo nano /etc/munin/munin.conf`
+- uncomment: `dbdir   /var/lib/munin
+              htmldir /var/cache/munin/www
+              logdir /var/log/munin
+              rundir  /var/run/munin`
+- under a simple host tree change to: `ec2-35-176-170-23.eu-west-2.compute.amazonaws.com]
+                                           address 35.176.170.23
+                                           use_node_name yes`
+
 # Contributing
 This is an assessed project, so I'd probably get in trouble for accepting external input.
 
