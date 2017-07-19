@@ -17,8 +17,7 @@ http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 2200
 
 ## SSH key
-- [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/graderKey)
-- Password submitted to reviewer in "Notes to Reviewer"
+- graderKey content submitted to reviewer in "Notes to Reviewer"
 
 # Software installed
 - Ubuntu 16.04 LTS - operating system installed with Lightsail 
