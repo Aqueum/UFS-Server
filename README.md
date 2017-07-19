@@ -272,4 +272,21 @@ output:
 - `service apache2 restart`
 - `python catalogue/application.py`
 
-### Configure Gunicorn
+### (This didn't work so I gave up on gunicorn:
+- `cd catalogue`
+- `nano gunicorn.conf`
+- Add following content:
+`accesslog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_access.log"
+errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
+- Exclude logs from git with `cd ..`, `nano .gitignore`, add `logs/`
+- Add logs folder with `cd catalogue`, `mkdir logs`
+- `gunicorn -c gunicorn.conf -b 0.0.0.0:8000 application:application`)
+
+## Configure Google OAuth
+- Go to [Google developers console](https://console.developers.google.com)
+- Click Api Manager > Credentials > Create credentials > OAuth Client ID > Web application
+- Enter Name as `UFS-Server` 
+- Authorised JavaScript origins as: 
+  - 'http://35.176.170.23'
+  - `http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com`
+- Authorised redirect URI aS
