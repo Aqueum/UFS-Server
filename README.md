@@ -156,7 +156,7 @@ See [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-d
 
 ### New user
 - `sudo adduser grader`
-- Password stored elsewhere, will be provided to grader in submission comments
+- Password stored elsewhere, was going to be provided to grader in submission comments, but see 'Change grader key' below.
 
 ### Grant sudo access
 See [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
