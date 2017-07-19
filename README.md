@@ -43,23 +43,28 @@ http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 
 
 # Third Party Resources
+Please see 'What I did' below for context & details, the most useful resources consulted were:
+- [Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw)'s tutorial
+- [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
+- [Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163)'s answer
+- [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)'s tutorial
+- [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)'s tutorial
+- [Armin Ronacher](http://flask.pocoo.org/docs/0.12/installation/)'s tutorial
+- [SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html) documentation
+- [readthedocs](https://oauth2client.readthedocs.io/en/latest/) docs
+- [Kenneth Reitz](http://docs.python-requests.org/en/master/user/install/)'s tutorial
+- [Kunena](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)'s tutorial
+- [Ionut](https://www.vioan.eu/blog/2016/10/10/deploy-your-flask-python-app-on-ubuntu-with-apache-gunicorn-and-systemd/)'s tutorial
+- [sharkwhistle](https://github.com/sharkwhistle/Udacity-FSND-Linux-Server-Configuration-)'s repo
+- [initd](http://initd.org/psycopg/docs/install.html)'s tutorial
+- [tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session)'s answer
 
 # Known issues
-## Not built
-At time of writing, I'm still in planning stages, hence it probably won't work.
+## Gunicorn
+I couldn't set up gunicorn succesfully, so fell back to use tmux, I imagine this may cause problems if there is a server crash, etc.
 
 # Files
-
-# Contributing
-This is an assessed project, so I'd probably get in trouble for accepting external input.
-
-# Code Status
-Can Udacity add a badge here..?
-
-# License
-This is an assessed project, but also may be further developed to help a local community interest company,
-as such **all rights are reserved**, feel free to [contact me](http://www.aqueum.com/contact/)
-if you have any questions.
+Other than the [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/graderKey) and this document significant files can be found in the [Server branch of my UFS-ItemCatalogue GitHub repo](https://github.com/Aqueum/UFS-ItemCatalogue/tree/server).
 
 # What I did
 ## Set up lightsail
@@ -146,7 +151,7 @@ output:
 - Password stored elsewhere, will be provided to grader in submission comments
 
 ### Grant sudo access
-see [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)'s's tutorial
+see [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
 - `sudo usermod -aG sudo grader`
 
 ### Apply grader SSH keys
@@ -214,7 +219,7 @@ See [Armin Ronacher](http://flask.pocoo.org/docs/0.12/installation/)'s tutorial
 - `pip install Flask`
 
 ## Install SQLAlchemy
-See [SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html) docs
+See [SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html) documentation
 - Inside virtual environment:
 - `pip install SQLAlchemy`
 
@@ -364,3 +369,14 @@ See [tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-
 - Because I think we're done 
 - Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
 - Named `UFS-system-1500467661572`
+
+# Contributing
+This is an assessed project, so I'd probably get in trouble for accepting external input.
+
+# Code Status
+Can Udacity add a badge here..?
+
+# License
+This is an assessed project, but also may be further developed to help a local community interest company,
+as such **all rights are reserved**, feel free to [contact me](http://www.aqueum.com/contact/)
+if you have any questions.
