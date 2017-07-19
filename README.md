@@ -1,21 +1,23 @@
 # UFS-Server
 - Udacity Full Stack - Linux Server Configuration
-- [Udacity Full Stack Web Developer Nanodegree](
-https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004)
+- [Udacity Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004)
 - Martin Currie (Aqueum) - 8 July 2017
 
 # Purpose & design
-Taking a basline Linux server install and setting it up to host a web app, secured from a number of attack vectors.
+Taking a baseline Linux server install and setting it up to host a web app, secured from a number of attack vectors.
 
 # Getting Started
 ## App URL
+http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 
 ## Server IP Address
+[35.176.170.23](http://35.176.170.23/)
 
 ## Server SSH port
+2200
 
 ## SSH key
-Submitted to reviewer in "Notes to Reviewer"
+Password submitted to reviewer in "Notes to Reviewer"
 
 # Software installed
 ## Apache 2
@@ -321,3 +323,23 @@ errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
 - go to [web app](http://35.176.170.23/)
 - all working fine, with empty database
 
+### Repopulate database
+- via the [web interface](http://35.176.170.23/) 
+- populating manually to check function
+
+## Leave session running with tmux
+([tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session))
+- `cd UFS-ItemCatalogue` (if  not already there)
+- `tmux` to enter tmux
+- `. venv/bin/activate` to enter virtual environment
+- `python catalogue/application.py` to run the catalogue app
+- detatch tmux session with ctrl-b then `d`
+- check all is well at the [web app](http://35.176.170.23/)
+- `exit` to log out of ssh
+- quit terminal
+- check all is still well at the [web app](http://35.176.170.23/)
+
+### Snapshot
+- Because I think we're done 
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
+- Named `UFS-system-1500467661572`
