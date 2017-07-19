@@ -17,8 +17,7 @@ http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 2200
 
 ## SSH key
-- [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/graderKey)
-- Password submitted to reviewer in "Notes to Reviewer"
+- graderKey content submitted to reviewer in "Notes to Reviewer"
 
 # Software installed
 - Ubuntu 16.04 LTS - operating system installed with Lightsail 
@@ -107,7 +106,7 @@ Other than the [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/grad
 
 ### Change SSH port
 - `sudo nano /etc/ssh/sshd_config`
-- change `Port 22` line to `Port 2200'
+- change `Port 22` line to `Port 2200`
 - `sudo service sshd restart`
 
 ### Reconfigure Lightsail firewall
@@ -157,7 +156,7 @@ See [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-d
 
 ### New user
 - `sudo adduser grader`
-- Password stored elsewhere, will be provided to grader in submission comments
+- Password stored elsewhere, was going to be provided to grader in submission comments, but see 'Change grader key' below.
 
 ### Grant sudo access
 See [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
