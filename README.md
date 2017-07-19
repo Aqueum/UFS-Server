@@ -17,13 +17,32 @@ http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 2200
 
 ## SSH key
-Password submitted to reviewer in "Notes to Reviewer"
+- [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/graderKey)
+- Password submitted to reviewer in "Notes to Reviewer"
 
 # Software installed
-## Apache 2
-`sudo apt-get install apache2 apache2-utils libexpat1 ssl-cert python` to configure prerequisites for mod-wsgi
+- Ubuntu 16.04 LTS - operating system installed with Lightsail 
+- Apache 2 - server
+- mod-wsgi - server interface for python web apps
+- apache2-utils, libexpat1, ssl-cert - prerequisites fro mod-wsgi
+- Python 2 - language
+- PostgreSQL - database utility
+- Item Catalogue - my database
+- Virtualenv - virtual environment manager
+- Flask - python framework
+- SQLAlchemy - python database framework
+- oauth2client - python OAuth library
+- Requests - python HTTP library
+- psycopg2 - python PostgreSQL adapter
 
-# Third Party Resorces
+## also used bundled software
+- git - version management
+- pip - package installed
+- nano - text editor
+- tmux - terminal multiplexer (used for session persistance) 
+
+
+# Third Party Resources
 
 # Known issues
 ## Not built
@@ -96,7 +115,7 @@ if you have any questions.
 - In terminal home `ssh ubuntu@35.176.170.23 -p 2200 -i ~/.ssh/ufs_rsa`
 
 ## Uncomplicated Firewall (UFW)
-([Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw))
+see [Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw)'s tutorial
 - logged in as ubuntu:
 - `sudo ufw enable` (perhaps I should have left this until last, but I wrongly assumed that the lightsail firewall interface was using UFW)
 - `sudo ufw status` (this indicated UFW was active but didn't give the ports table )
@@ -127,7 +146,7 @@ output:
 - Password stored elsewhere, will be provided to grader in submission comments
 
 ### Grant sudo access
-([Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart))
+see [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)'s's tutorial
 - `sudo usermod -aG sudo grader`
 
 ### Apply grader SSH keys
@@ -143,11 +162,11 @@ output:
 - enter password
 
 ## Set timezone to UTC
-([Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163))
+see [Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163)'s answer
 - `sudo dpkg-reconfigure tzdata`
 
 ## Install Apache with mod-wsgi
-([Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/))
+see [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)'s tutorial
 - `sudo apt install apache2`
 - `Y`
 - `sudo apt-get install apache2 apache2-utils libexpat1 ssl-cert python` to configure prerequisites for mod-wsgi
@@ -157,7 +176,7 @@ output:
 - `sudo /etc/init.d/apache2 restart`
 
 ## Install PostgreSQL
-([Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps))
+see [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)'s tutorial
 - `sudo apt install postgresql-client-common`
 - `sudo apt-get update`
 - `sudo apt-get install postgresql postgresql-contrib`
@@ -186,7 +205,7 @@ output:
 - `git pull origin master`
 
 ## Install Flask with virtualenv
-([Armin Ronacher](http://flask.pocoo.org/docs/0.12/installation/))
+See [Armin Ronacher](http://flask.pocoo.org/docs/0.12/installation/)'s tutorial
 - `cd UFS-ItemCatalogue` (if  not already there)
 - `virtualenv venv` & `Y` to set up virtual environment'
 - last step also installs setuptools, pkg_resources, pip & wheel
@@ -195,17 +214,17 @@ output:
 - `pip install Flask`
 
 ## Install SQLAlchemy
-([SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html))
+See [SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html) docs
 - Inside virtual environment:
 - `pip install SQLAlchemy`
 
 ## Install oauth2client
-([readthedocs](https://oauth2client.readthedocs.io/en/latest/))
+see [readthedocs](https://oauth2client.readthedocs.io/en/latest/) docs
 - Inside virtual environment:
 - `pip install --upgrade oauth2client`
 
 ## Install Requests
-([Kenneth Reitz](http://docs.python-requests.org/en/master/user/install/))
+See [Kenneth Reitz](http://docs.python-requests.org/en/master/user/install/)'s tutorial
 - Inside virtual environment:
 - `pip install requests'
 
@@ -226,7 +245,7 @@ output:
 - Named `UFS-system-1500388154142`
 
 ## Branch UFS-ItemCatalogue
-([Kunena](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches))
+See [Kunena](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)'s tutorial
 - `git checkout -b server` to create and switch to new branch
 - `git push origin server` to push branch to GitHub
 - enter GitHub username & password
@@ -236,7 +255,7 @@ output:
 - enter GitHub username & password
 
 ## Deploy UFS-ItemCatalogue with Gunicorn & systemd
-([Ionut](https://www.vioan.eu/blog/2016/10/10/deploy-your-flask-python-app-on-ubuntu-with-apache-gunicorn-and-systemd/))
+See [Ionut](https://www.vioan.eu/blog/2016/10/10/deploy-your-flask-python-app-on-ubuntu-with-apache-gunicorn-and-systemd/)'s tutorial
 - `cd UFS-ItemCatalogue` (if  not already there)
 - `. venv/bin/activate` to activate vitual environment
 - `sudo a2enmod` to enable apache proxy modules
@@ -299,7 +318,7 @@ errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
 - Named `UFS-system-1500453256273`
 
 ### Create password protected role & database 
-(tried ([Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)), but the permissions didn't work, tried other tutorials but couldn't find one that gave passwords for local use (only remote, 2 server use), so went with [sharkwhistle](https://github.com/sharkwhistle/Udacity-FSND-Linux-Server-Configuration-))
+tried [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps), but the permissions didn't work, tried other's tutorials but couldn't find one that gave passwords for local use (only remote, 2 server use), so went with [sharkwhistle](https://github.com/sharkwhistle/Udacity-FSND-Linux-Server-Configuration-)
 - `CREATE USER puser WITH PASSWORD 'Hj8%rfHyMX43UtrNJi*';` create a used called puser with a relatively secure password
 - `ALTER USER puser CREATEDB;` let puser create databases
 - `CREATE DATABASE pcat WITH OWNER puser;` (sharkwhistle was wrong, [docs](https://www.postgresql.org/docs/8.0/static/sql-createdatabase.html) have OWNER, rather than USER)
@@ -313,9 +332,11 @@ errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
 - in application.py & catalogue_setup.py use nano to:
   - change `engine = create_engine('sqlite:///catalogue/catalogue.db')`
   - to `engine = create_engine('postgresql://puser:Hj8%rfHyMX43UtrNJi*@localhost/pcat')`
+- `git commit -a`
+- `git push`
 
 ### Install psycopg2
-([initd](http://initd.org/psycopg/docs/install.html))
+See [initd](http://initd.org/psycopg/docs/install.html)'s tutorial
 - `pip install psycopg2`
 
 ### Check application
@@ -328,7 +349,7 @@ errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
 - populating manually to check function
 
 ## Leave session running with tmux
-([tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session))
+See [tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session)'s answer
 - `cd UFS-ItemCatalogue` (if  not already there)
 - `tmux` to enter tmux
 - `. venv/bin/activate` to enter virtual environment
