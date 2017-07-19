@@ -141,6 +141,15 @@ output:
  80/tcp (v6)                ALLOW       Anywhere (v6)             
  123 (v6)                   ALLOW       Anywhere (v6)  `
 
+### disable root
+I actually forgot & did this at the end, but this is where I think it belongs
+
+See [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user)'s tutorial
+- `sudo nano /etc/ssh/sshd_config`
+- change `PermitRootLogin prohibit-password`
+- to `PermitRootLogin no`
+- `sudo /etc/init.d/apache2 restart`
+
 ## Give grader access
 ### Generate grader SSH keys
 - `ssh-keygen`
@@ -153,15 +162,6 @@ output:
 ### Grant sudo access
 See [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
 - `sudo usermod -aG sudo grader`
-
-### disable root
-I actually forgot & did this at the end, but this is where I think it belongs
-
-See [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user)'s tutorial
-- `sudo nano /etc/ssh/sshd_config`
-- change `PermitRootLogin prohibit-password`
-- to `PermitRootLogin no`
-- `sudo /etc/init.d/apache2 restart`
 
 ### Apply grader SSH keys
 - `su - grader` then enter password to switch log in to grader
@@ -378,6 +378,9 @@ See [tongpu](https://askubuntu.com/questions/8653/how-to-keep-processes-running-
 - Because I think we're done 
 - Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
 - Named `UFS-system-1500467661572`
+
+## Change grader key
+Changed key, after uploading password protected key to github (without password) after realising it was the key content that was requested rather than the password in the grader notes.
 
 # Contributing
 This is an assessed project, so I'd probably get in trouble for accepting external input.
