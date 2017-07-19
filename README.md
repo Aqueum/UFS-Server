@@ -106,7 +106,7 @@ Other than the [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/grad
 
 ### Change SSH port
 - `sudo nano /etc/ssh/sshd_config`
-- change `Port 22` line to `Port 2200'
+- change `Port 22` line to `Port 2200`
 - `sudo service sshd restart`
 
 ### Reconfigure Lightsail firewall
