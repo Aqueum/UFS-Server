@@ -7,11 +7,11 @@
 Taking a baseline Linux server install and setting it up to host a web app, secured from a number of attack vectors.
 
 # Getting Started
-## App URL
-http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
-
 ## Server IP Address
 [35.176.170.23](http://35.176.170.23/)
+
+## App URL
+http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 
 ## Server SSH port
 2200
@@ -46,6 +46,7 @@ http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com
 Please see 'What I did' below for context & details, the most useful resources consulted were:
 - [Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw)'s tutorial
 - [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
+- [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user)'s tutorial
 - [Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163)'s answer
 - [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)'s tutorial
 - [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)'s tutorial
@@ -90,7 +91,6 @@ Other than the [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/grad
 ### log in
 - In terminal home `ssh ubuntu@35.176.170.23 -p 22 -i ~/.ssh/ufs_rsa`
 
-
 ## Update all currently installed packages
 - `sudo apt-get update`
 - `sudo apt-get upgrade`
@@ -120,7 +120,7 @@ Other than the [graderKey](https://github.com/Aqueum/UFS-Server/blob/master/grad
 - In terminal home `ssh ubuntu@35.176.170.23 -p 2200 -i ~/.ssh/ufs_rsa`
 
 ## Uncomplicated Firewall (UFW)
-see [Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw)'s tutorial
+See [Linode](https://www.linode.com/docs/security/firewalls/configure-firewall-with-ufw)'s tutorial
 - logged in as ubuntu:
 - `sudo ufw enable` (perhaps I should have left this until last, but I wrongly assumed that the lightsail firewall interface was using UFW)
 - `sudo ufw status` (this indicated UFW was active but didn't give the ports table )
@@ -151,8 +151,17 @@ output:
 - Password stored elsewhere, will be provided to grader in submission comments
 
 ### Grant sudo access
-see [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
+See [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)' tutorial
 - `sudo usermod -aG sudo grader`
+
+### disable root
+I actually forgot & did this at the end, but this is where I think it belongs
+
+See [Media Temple](https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user)'s tutorial
+- `sudo nano /etc/ssh/sshd_config`
+- change `PermitRootLogin prohibit-password`
+- to `PermitRootLogin no`
+- `sudo /etc/init.d/apache2 restart`
 
 ### Apply grader SSH keys
 - `su - grader` then enter password to switch log in to grader
@@ -167,11 +176,11 @@ see [Mitchell Anicas](https://www.digitalocean.com/community/tutorials/how-to-cr
 - enter password
 
 ## Set timezone to UTC
-see [Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163)'s answer
+See [Mitch](https://askubuntu.com/questions/323131/setting-timezone-from-terminal/323163)'s answer
 - `sudo dpkg-reconfigure tzdata`
 
 ## Install Apache with mod-wsgi
-see [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)'s tutorial
+See [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)'s tutorial
 - `sudo apt install apache2`
 - `Y`
 - `sudo apt-get install apache2 apache2-utils libexpat1 ssl-cert python` to configure prerequisites for mod-wsgi
@@ -181,7 +190,7 @@ see [Hitesh Jethva](https://devops.profitbricks.com/tutorials/install-and-config
 - `sudo /etc/init.d/apache2 restart`
 
 ## Install PostgreSQL
-see [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)'s tutorial
+See [Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)'s tutorial
 - `sudo apt install postgresql-client-common`
 - `sudo apt-get update`
 - `sudo apt-get install postgresql postgresql-contrib`
@@ -224,7 +233,7 @@ See [SQLAlchemy](http://docs.sqlalchemy.org/en/latest/intro.html) documentation
 - `pip install SQLAlchemy`
 
 ## Install oauth2client
-see [readthedocs](https://oauth2client.readthedocs.io/en/latest/) docs
+See [readthedocs](https://oauth2client.readthedocs.io/en/latest/) docs
 - Inside virtual environment:
 - `pip install --upgrade oauth2client`
 
@@ -259,7 +268,7 @@ See [Kunena](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-wit
 - `git push --set-upstream origin server`
 - enter GitHub username & password
 
-## Deploy UFS-ItemCatalogue with Gunicorn & systemd
+## Deploy UFS-ItemCatalogue
 See [Ionut](https://www.vioan.eu/blog/2016/10/10/deploy-your-flask-python-app-on-ubuntu-with-apache-gunicorn-and-systemd/)'s tutorial
 - `cd UFS-ItemCatalogue` (if  not already there)
 - `. venv/bin/activate` to activate vitual environment
