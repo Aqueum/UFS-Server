@@ -220,8 +220,7 @@ output:
 
 ## Snapshot
 - Because application.py now runs without errors
-- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot)
-- Click Create snapshot
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
 - Named `UFS-system-1500388154142`
 
 ## Branch UFS-ItemCatalogue
@@ -261,8 +260,7 @@ output:
 
 ### Snapshot
 - Because application.py is being served with dead links & I want to go off piste to fix it 
-- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot)
-- Click Create snapshot
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
 - Named `UFS-system-1500417929080`
 
 ### Run app at root
@@ -287,6 +285,39 @@ errorlog = "/home/grader/UFS-ItemCatalogue/catalogue/logs/gunicorn_error.log"`
 - Click Api Manager > Credentials > Create credentials > OAuth Client ID > Web application
 - Enter Name as `UFS-Server` 
 - Authorised JavaScript origins as: 
-  - 'http://35.176.170.23'
+  - `http://35.176.170.23`
   - `http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com`
-- Authorised redirect URI aS
+- Authorised redirect URI as:
+  - `http://ec2-35-176-170-23.eu-west-2.compute.amazonaws.com/gconnect`
+
+## Transition Image Catalogue to PostgreSQL
+### Snapshot
+- In case this breaks it
+- Go to [Snapshots](https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/UFS/snapshot) & click Create snapshot
+- Named `UFS-system-1500453256273`
+
+### Create password protected role & database 
+(tried ([Justin Ellingwood](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)), but the permissions didn't work, tried other tutorials but couldn't find one that gave passwords for local use (only remote, 2 server use), so went with [sharkwhistle](https://github.com/sharkwhistle/Udacity-FSND-Linux-Server-Configuration-))
+- `CREATE USER puser WITH PASSWORD 'Hj8%rfHyMX43UtrNJi*';` create a used called puser with a relatively secure password
+- `ALTER USER puser CREATEDB;` let puser create databases
+- `CREATE DATABASE pcat WITH OWNER puser;` (sharkwhistle was wrong, [docs](https://www.postgresql.org/docs/8.0/static/sql-createdatabase.html) have OWNER, rather than USER)
+- `\c pcat` connect to pcat database
+- `REVOKE ALL ON SCHEMA public FROM public;` revoke public permissions
+- `GRANT ALL ON SCHEMA public TO puser;` grant permissions to puser (only)
+- `\q` quit psql
+- `exit` logout of user postgres
+
+### Change python references from sqlite to new psql database
+- in application.py & catalogue_setup.py use nano to:
+  - change `engine = create_engine('sqlite:///catalogue/catalogue.db')`
+  - to `engine = create_engine('postgresql://puser:Hj8%rfHyMX43UtrNJi*@localhost/pcat')`
+
+### Install psycopg2
+([initd](http://initd.org/psycopg/docs/install.html))
+- `pip install psycopg2`
+
+### Check application
+- `python catalogue/application.py`
+- go to [web app](http://35.176.170.23/)
+- all working fine, with empty database
+
